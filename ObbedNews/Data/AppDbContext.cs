@@ -11,16 +11,6 @@ public class AppDbContext : DbContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-
-        builder.Entity<Account>()
-            .HasOne<User>(a => a.User)
-            .WithOne(u => u.Account)
-            .HasForeignKey<User>(u => u.AccountId);
-    }
-    
     // accounts
     public DbSet<Account> Accounts { get; set; } = null!;
 
@@ -51,4 +41,13 @@ public class AppDbContext : DbContext
     // orders
     public DbSet<PayPalOrder> PayPalOrders { get; set; } = null!;
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<Account>()
+            .HasOne<User>(a => a.User)
+            .WithOne(u => u.Account)
+            .HasForeignKey<User>(u => u.AccountId);
+    }
 }

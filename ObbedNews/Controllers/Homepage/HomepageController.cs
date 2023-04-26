@@ -4,49 +4,50 @@ using ObbedNews.Data;
 using ObbedNews.Dto.Homepage;
 using ObbedNews.Enums.News.Comments;
 
-namespace ObbedNews.Controllers.Homepage
+namespace ObbedNews.Controllers.Homepage;
+
+[Route("api/[controller]")]
+[ApiController]
+public class HomepageController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HomepageController : ControllerBase
+    private readonly AppDbContext _context;
+
+    public HomepageController(AppDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public HomepageController(AppDbContext context) => _context = context;
+    [HttpGet]
+    public async Task<ActionResult<HomepageDto>> Homepage()
+    {
+        // todo implement popular property
+        var popular = await _context.News
+            .OrderByDescending(m => m.CreatedAt)
+            .Where(m => m.Popular)
+            .Skip(0)
+            .Take(20)
+            .ToListAsync();
 
-        [HttpGet]
-        public async Task<ActionResult<HomepageDto>> Homepage()
+        var mostCommented = await _context.News
+            .Where(m => m.Comments
+                .Count(c => c.Status == CommentStatus.Active) > 9)
+            .OrderByDescending(m => m.Comments.Count)
+            .Skip(0)
+            .Take(20)
+            .ToListAsync();
+
+        var last = await _context.News
+            .OrderByDescending(m => m.CreatedAt)
+            .Skip(0)
+            .Take(20)
+            .ToListAsync();
+
+
+        return new HomepageDto
         {
-            // todo implement popular property
-            var popular = await _context.News
-                .OrderByDescending(m => m.CreatedAt)
-                .Where(m => m.Popular && m.VideoSections.Count > 0)
-                .Skip(0)
-                .Take(20)
-                .ToListAsync();
-
-            var mostCommented = await _context.News
-                .Where(m => m.Comments
-                    .Count(c => c.Status == CommentStatus.Active) > 9 && m.VideoSections.Count > 0)
-                .OrderByDescending(m => m.Comments.Count)
-                .Skip(0)
-                .Take(20)
-                .ToListAsync();
-
-            var last = await _context.News
-                .Where(c => c.VideoSections.Count > 0)
-                .OrderByDescending(m => m.CreatedAt)
-                .Skip(0)
-                .Take(20)
-                .ToListAsync();
-
-
-            return new HomepageDto
-            {
-                Popular = popular,
-                MostCommented = mostCommented,
-                Last = last,
-            };
-        }
+            Popular = popular,
+            MostCommented = mostCommented,
+            Last = last
+        };
     }
 }

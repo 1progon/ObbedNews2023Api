@@ -7,5 +7,5 @@ public enum OrderStatus
     NotPaid = 2,
     Ended = 3,
     Declined = 4,
-    MoneyBack = 5,
+    MoneyBack = 5
 }

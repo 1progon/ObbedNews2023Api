@@ -8,8 +8,6 @@ public class UpdateNewsDto : BaseModelDto
 {
     [Required] public long Id { get; set; }
     [JsonPropertyName("categoryId")] public long CategoryId { get; set; }
-    [JsonPropertyName("languageId")] public long LanguageId { get; set; }
-    [JsonPropertyName("level")] public NewsLevel Level { get; set; }
 
     public IFormFile? MainImage { get; set; }
 
@@ -18,7 +16,6 @@ public class UpdateNewsDto : BaseModelDto
     [JsonPropertyName("article")] public string? Article { get; set; }
 
     [JsonPropertyName("newsLink")] public string? NewsLink { get; set; }
-    [JsonPropertyName("torrentLink")] public string? TorrentLink { get; set; }
 
     [JsonPropertyName("popular")] public bool Popular { get; set; }
 

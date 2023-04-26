@@ -8,5 +8,5 @@ public enum PaymentPlan
     SixMonth = 6,
     OneYear = 12,
     TwoYears = 24,
-    ThreeYears = 36,
+    ThreeYears = 36
 }

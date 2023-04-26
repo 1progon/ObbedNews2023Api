@@ -1,9 +1,9 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using ObbedNews.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ObbedNews.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +27,7 @@ builder.Services
 
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt")["Key"] ?? "")),
+                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt")["Key"] ?? ""))
         };
     });
 

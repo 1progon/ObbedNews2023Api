@@ -12,5 +12,3 @@ public class AddedNewsDto
 
     public long? ParentCommentId { get; set; }
 }
-
-

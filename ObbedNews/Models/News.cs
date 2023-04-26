@@ -39,9 +39,6 @@ public class News : BaseModelWithDates
     public IList<UserNewsFavorite> UserNewsFavorites { get; set; } = new List<UserNewsFavorite>();
 
     public IList<NewsVideoSection> VideoSections { get; set; } = new List<NewsVideoSection>();
-
-    public NewsLevel Level { get; set; }
-
+    
     public bool IsFree { get; set; }
-
 }
