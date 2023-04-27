@@ -80,6 +80,7 @@ public class NewsController : ControllerBase
             .Include(c => c.Tags)
             .Include(m => m.Comments
                 .OrderByDescending(c => c.Likes)
+                .ThenBy(c => c.Dislikes)
                 .ThenByDescending(c => c.Id)
                 .Skip(commentsOffset)
                 .Take(commentsLimit)
@@ -88,6 +89,7 @@ public class NewsController : ControllerBase
             .ThenInclude(c => c.User)
             .Include(m => m.Comments
                 .OrderByDescending(c => c.Likes)
+                .ThenBy(c => c.Dislikes)
                 .ThenByDescending(c => c.Id)
                 .Skip(commentsOffset)
                 .Take(commentsLimit)
