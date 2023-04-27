@@ -79,14 +79,16 @@ public class NewsController : ControllerBase
         var newsQueryable = _context.News
             .Include(c => c.Tags)
             .Include(m => m.Comments
-                .OrderByDescending(c => c.Id)
+                .OrderByDescending(c => c.Likes)
+                .ThenByDescending(c => c.Id)
                 .Skip(commentsOffset)
                 .Take(commentsLimit)
                 .Where(c => c.ParentCommentId == null && c.Status == CommentStatus.Active)
             )
             .ThenInclude(c => c.User)
             .Include(m => m.Comments
-                .OrderByDescending(c => c.Id)
+                .OrderByDescending(c => c.Likes)
+                .ThenByDescending(c => c.Id)
                 .Skip(commentsOffset)
                 .Take(commentsLimit)
                 .Where(c => c.ParentCommentId == null && c.Status == CommentStatus.Active)
