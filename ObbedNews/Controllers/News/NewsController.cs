@@ -78,6 +78,8 @@ public class NewsController : ControllerBase
     {
         var newsQueryable = _context.News
             .Include(c => c.Tags)
+            
+            // first time to include user and only parent comments
             .Include(m => m.Comments
                 .OrderByDescending(c => c.Likes)
                 .ThenBy(c => c.Dislikes)
@@ -87,6 +89,8 @@ public class NewsController : ControllerBase
                 .Where(c => c.ParentCommentId == null && c.Status == CommentStatus.Active)
             )
             .ThenInclude(c => c.User)
+
+            // second time for include child comments
             .Include(m => m.Comments
                 .OrderByDescending(c => c.Likes)
                 .ThenBy(c => c.Dislikes)
@@ -96,7 +100,9 @@ public class NewsController : ControllerBase
                 .Where(c => c.ParentCommentId == null && c.Status == CommentStatus.Active)
             )
             .ThenInclude(c => c.ChildComments
-                .OrderByDescending(mc => mc.Id)
+                .OrderByDescending(mc => mc.Likes)
+                .ThenBy(mc => mc.Dislikes)
+                .ThenByDescending(mc => mc.Id)
                 .Skip(0)
                 .Take(50)
                 .Where(mc => mc.ParentCommentId != null && mc.Status == CommentStatus.Active)
