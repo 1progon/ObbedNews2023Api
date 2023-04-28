@@ -54,7 +54,9 @@ public class NewsController : ControllerBase
 
             if (!category) return NotFound();
 
-            q = q.Where(c => c.Category.Slug == categorySlug);
+            q = q
+                .Where(c => c.Category.Slug == categorySlug)
+                .Include(n => n.Category.ParentCategory);
         }
 
         q = q.Skip(offset)
@@ -78,7 +80,7 @@ public class NewsController : ControllerBase
     {
         var newsQueryable = _context.News
             .Include(c => c.Tags)
-            
+
             // first time to include user and only parent comments
             .Include(m => m.Comments
                 .OrderByDescending(c => c.Likes)
