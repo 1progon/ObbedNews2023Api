@@ -31,6 +31,7 @@ public class CategoriesController : ControllerBase
     public async Task<ActionResult<IList<ParentCategory>>> GetParentCategories()
     {
         return await _context.ParentCategories
+            .Include(pc => pc.Categories)
             .OrderBy(pc => pc.Name)
             .ToListAsync();
     }
