@@ -73,7 +73,7 @@ public class NewsController : ControllerBase
 
     // GET: api/News/slug-name
     [HttpGet("{slug}")]
-    public async Task<ActionResult<Models.News>> GetSingleNewsBySlug(
+    public async Task<ActionResult<GetSingleNewsDto>> GetSingleNewsBySlug(
         string slug,
         [FromQuery] int commentsLimit = 50,
         [FromQuery] int commentsOffset = 0)
@@ -129,8 +129,26 @@ public class NewsController : ControllerBase
 
         if (news == null) return NotFound();
 
+        var nearBy = await _context.News
+            .OrderByDescending(n => n.Name)
+            .Where(n => n.Id <= news.Id)
+            .Take(10)
+            .ToListAsync();
 
-        return news;
+        nearBy.AddRange(await _context.News
+            .OrderBy(n => n.Name)
+            .Where(n => n.Id >= news.Id)
+            .Take(10)
+            .ToListAsync());
+
+
+        nearBy = nearBy.OrderBy(n => n.Name).Distinct().ToList();
+
+        return new GetSingleNewsDto
+        {
+            News = news,
+            NearbyNews = nearBy
+        };
     }
 
     // GET: api/News/GetNewsById/id-number
