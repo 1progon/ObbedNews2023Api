@@ -129,27 +129,26 @@ public class NewsController : ControllerBase
 
         if (news == null) return NotFound();
 
-        var nearBy = await _context.News
+
+        var nearbyNews = await _context.News
             .OrderByDescending(n => n.Name)
-            .Where(n => n.Id <= news.Id)
-            .Take(10)
             .Select(n => new Models.News { Slug = n.Slug, Name = n.Name })
+            .Where(n => n.Name.CompareTo(news.Name) < 0)
+            .Take(10)
+            .Concat(
+                _context.News
+                    .OrderBy(n => n.Name)
+                    .Select(n => new Models.News { Slug = n.Slug, Name = n.Name })
+                    .Where(n => n.Name.CompareTo(news.Name) >= 0)
+                    .Take(11)
+            )
             .ToListAsync();
 
-        nearBy.AddRange(await _context.News
-            .OrderBy(n => n.Name)
-            .Where(n => n.Id >= news.Id)
-            .Take(10)
-            .Select(n => new Models.News { Slug = n.Slug, Name = n.Name })
-            .ToListAsync());
-
-
-        nearBy = nearBy.OrderBy(n => n.Name).DistinctBy(n => n.Slug).ToList();
 
         return new GetSingleNewsDto
         {
             News = news,
-            NearbyNews = nearBy
+            NearbyNews = nearbyNews.OrderBy(n => n.Name).ToList()
         };
     }
 
