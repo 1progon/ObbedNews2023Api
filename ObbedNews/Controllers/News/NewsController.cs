@@ -133,16 +133,18 @@ public class NewsController : ControllerBase
             .OrderByDescending(n => n.Name)
             .Where(n => n.Id <= news.Id)
             .Take(10)
+            .Select(n => new Models.News { Slug = n.Slug, Name = n.Name })
             .ToListAsync();
 
         nearBy.AddRange(await _context.News
             .OrderBy(n => n.Name)
             .Where(n => n.Id >= news.Id)
             .Take(10)
+            .Select(n => new Models.News { Slug = n.Slug, Name = n.Name })
             .ToListAsync());
 
 
-        nearBy = nearBy.OrderBy(n => n.Name).Distinct().ToList();
+        nearBy = nearBy.OrderBy(n => n.Name).DistinctBy(n => n.Slug).ToList();
 
         return new GetSingleNewsDto
         {
