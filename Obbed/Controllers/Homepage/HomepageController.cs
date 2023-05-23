@@ -23,14 +23,14 @@ public class HomepageController : ControllerBase
         // todo implement popular property
         var popular = await _context.Words
             .OrderByDescending(m => m.CreatedAt)
-            .Where(m => m.Popular)
+            .Where(m => m.Popular && !m.IsDraft)
             .Skip(0)
             .Take(20)
             .ToListAsync();
 
         var mostCommented = await _context.Words
             .Where(m => m.Comments
-                .Count(c => c.Status == CommentStatus.Active) > 9)
+                .Count(c => c.Status == CommentStatus.Active) > 9 && !m.IsDraft)
             .OrderByDescending(m => m.Comments.Count)
             .Skip(0)
             .Take(20)
@@ -40,6 +40,7 @@ public class HomepageController : ControllerBase
             .OrderByDescending(m => m.CreatedAt)
             .Skip(0)
             .Take(20)
+            .Where(w => !w.IsDraft)
             .ToListAsync();
 
 

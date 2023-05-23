@@ -37,6 +37,7 @@ public class WordsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Word>>> GetWords(
         [FromQuery] string? categorySlug,
+        [FromQuery] bool? withDrafts,
         [FromQuery] int limit = 30,
         [FromQuery] int offset = 0)
     {
@@ -61,6 +62,12 @@ public class WordsController : ControllerBase
 
         q = q.Skip(offset)
             .Take(limit);
+
+        if (withDrafts is null or false)
+        {
+            q = q.Where(w => !w.IsDraft);
+        }
+
 
         if (offset >= limit && !await q.AnyAsync())
         {
@@ -127,7 +134,7 @@ public class WordsController : ControllerBase
         var word = await wordQueryable
             .SingleOrDefaultAsync(m => m.Slug == slug);
 
-        if (word == null) return NotFound();
+        if (word == null || word.IsDraft) return NotFound();
 
 
         var nearbyWords = await _context.Words
@@ -341,6 +348,7 @@ public class WordsController : ControllerBase
         m.LikesCount = dto.Likes;
         m.DislikesCount = dto.DisLikes;
         m.WordSection = dto.WordSection;
+        m.IsDraft = dto.IsDraft;
 
 
         if (dto.Tags is not null)
@@ -463,7 +471,8 @@ public class WordsController : ControllerBase
             IsFree = false,
             Popular = dto.Popular,
             LikesCount = dto.Likes,
-            DislikesCount = dto.DisLikes
+            DislikesCount = dto.DisLikes,
+            IsDraft = dto.IsDraft,
         };
 
         if (dto.Tags is not null)

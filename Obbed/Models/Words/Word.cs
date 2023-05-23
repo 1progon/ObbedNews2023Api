@@ -10,6 +10,8 @@ public class Word : BaseModelWithDates
 
     public override long Id { get; set; }
 
+    public bool IsDraft { get; set; }
+
     public string? MainThumb { get; set; }
     public string? MainImage { get; set; }
 

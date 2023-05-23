@@ -25,4 +25,6 @@ public class AddWordDto : BaseModelDto
     [JsonPropertyName("disLikes")] public long DisLikes { get; set; }
 
     [JsonPropertyName("wordSection")] public WordSection? WordSection { get; set; }
+    
+    [JsonPropertyName("isDraft")]public bool IsDraft { get; set; }
 }
