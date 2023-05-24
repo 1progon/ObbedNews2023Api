@@ -138,15 +138,15 @@ public class WordsController : ControllerBase
 
 
         // todo concatenate queries with index and nearby
-        var qq = _context.Words
+        var qWords = _context.Words
             .OrderBy(n => n.Name);
 
-        var wordIndex = qq
+        var wordIndex = qWords
             .AsEnumerable()
             .Select((w, i) => w.Id == word.Id ? i : -1)
             .FirstOrDefault(i => i > -1);
 
-        var nearbyWords = qq
+        var nearbyWords = qWords
             .AsEnumerable()
             .Select(n => new Word { Id = n.Id, Slug = n.Slug, Name = n.Name })
             .Where((_, index) => index >= wordIndex - 10 && index <= wordIndex + 10)
