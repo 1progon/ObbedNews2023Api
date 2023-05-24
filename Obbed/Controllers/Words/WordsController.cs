@@ -25,7 +25,8 @@ public class WordsController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly AppDbContext _context;
 
-    public WordsController(AppDbContext context, IWebHostEnvironment environment,
+    public WordsController(AppDbContext context,
+        IWebHostEnvironment environment,
         IConfiguration configuration)
     {
         _context = context;
