@@ -85,6 +85,7 @@ public class WordsController : ControllerBase
         [FromQuery] int commentsLimit = 50,
         [FromQuery] int commentsOffset = 0)
     {
+        // todo need optimise queries 
         var wordQueryable = _context.Words
             .Include(c => c.Tags)
 
