@@ -137,25 +137,25 @@ public class WordsController : ControllerBase
         if (word == null || word.IsDraft) return NotFound();
 
 
-        var nearbyWords = await _context.Words
-            .OrderByDescending(n => n.Name)
-            .Select(n => new Word { Slug = n.Slug, Name = n.Name })
-            .Where(n => n.Name.CompareTo(word.Name) < 0)
-            .Take(10)
-            .Concat(
-                _context.Words
-                    .OrderBy(n => n.Name)
-                    .Select(n => new Word { Slug = n.Slug, Name = n.Name })
-                    .Where(n => n.Name.CompareTo(word.Name) >= 0)
-                    .Take(11)
-            )
-            .ToListAsync();
+        // todo concatenate queries with index and nearby
+        var qq = _context.Words
+            .OrderBy(n => n.Name);
 
+        var wordIndex = qq
+            .AsEnumerable()
+            .Select((w, i) => w.Id == word.Id ? i : -1)
+            .FirstOrDefault(i => i > -1);
+
+        var nearbyWords = qq
+            .AsEnumerable()
+            .Select(n => new Word { Id = n.Id, Slug = n.Slug, Name = n.Name })
+            .Where((_, index) => index >= wordIndex - 10 && index <= wordIndex + 10)
+            .ToList();
 
         return new GetWordDto
         {
             Word = word,
-            NearbyWords = nearbyWords.OrderBy(n => n.Name).ToList()
+            NearbyWords = nearbyWords
         };
     }
 
