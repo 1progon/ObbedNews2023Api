@@ -53,7 +53,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Middle.UserWordFavorite", b =>
@@ -68,7 +68,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("UserWordsFavorites");
+                    b.ToTable("UserWordsFavorites", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Middle.UserWordLike", b =>
@@ -86,7 +86,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserWordsLikes");
+                    b.ToTable("UserWordsLikes", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Payment.Currency", b =>
@@ -111,7 +111,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Payment.PayPalOrder", b =>
@@ -157,7 +157,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PayPalOrders");
+                    b.ToTable("PayPalOrders", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Payment.Price", b =>
@@ -178,7 +178,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("CurrencyId");
 
-                    b.ToTable("Prices");
+                    b.ToTable("Prices", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Tag", b =>
@@ -205,7 +205,7 @@ namespace ObbedNews.Data.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.User", b =>
@@ -237,7 +237,7 @@ namespace ObbedNews.Data.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.Category", b =>
@@ -269,7 +269,7 @@ namespace ObbedNews.Data.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.ParentCategory", b =>
@@ -296,7 +296,7 @@ namespace ObbedNews.Data.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("ParentCategories");
+                    b.ToTable("ParentCategories", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.Word", b =>
@@ -372,7 +372,7 @@ namespace ObbedNews.Data.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Words");
+                    b.ToTable("Words", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.WordComment", b =>
@@ -416,7 +416,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.WordVideo", b =>
@@ -478,7 +478,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("WordsVideos");
+                    b.ToTable("WordsVideos", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Words.WordVideoSection", b =>
@@ -514,7 +514,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("WordsVideoSections");
+                    b.ToTable("WordsVideoSections", (string)null);
                 });
 
             modelBuilder.Entity("TagWord", b =>
@@ -529,7 +529,7 @@ namespace ObbedNews.Data.Migrations
 
                     b.HasIndex("WordListId");
 
-                    b.ToTable("TagWord");
+                    b.ToTable("TagWord", (string)null);
                 });
 
             modelBuilder.Entity("Obbed.Models.Middle.UserWordFavorite", b =>

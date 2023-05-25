@@ -2,5 +2,5 @@ namespace Obbed.Models.Words.Dictionary;
 
 public class WordSection
 {
-    public IList<SpeechPartSection> SpeechParts { get; set; } = new List<SpeechPartSection>();
+    public IList<SpeechPartSection>? SpeechParts { get; set; } = new List<SpeechPartSection>();
 }
