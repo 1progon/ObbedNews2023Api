@@ -45,5 +45,5 @@ public class Word : BaseModelWithDates
 
     public bool IsFree { get; set; }
 
-    [Column(TypeName = "jsonb")] public WordSection? WordSection { get; set; } = null!;
+    [Column(TypeName = "jsonb")] public WordSection? WordSection { get; set; }
 }

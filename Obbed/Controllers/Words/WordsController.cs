@@ -349,8 +349,9 @@ public class WordsController : ControllerBase
         m.Tags = new List<Tag>();
         m.LikesCount = dto.Likes;
         m.DislikesCount = dto.DisLikes;
-        m.WordSection = dto.WordSection;
         m.IsDraft = dto.IsDraft;
+
+        if (dto.WordSection is not null) m.WordSection = dto.WordSection;
 
 
         if (dto.Tags is not null)
