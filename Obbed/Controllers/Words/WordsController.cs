@@ -45,7 +45,8 @@ public class WordsController : ControllerBase
         var q = _context.Words.AsQueryable();
 
         q = q.OrderByDescending(n => n.Id)
-            .Include(c => c.VideoSections)
+            // .Include(c => c.VideoSections)
+            .AsNoTracking()
             .Include(c => c.Category);
 
 
@@ -120,8 +121,7 @@ public class WordsController : ControllerBase
             )
             .Include(c => c.Category)
             .ThenInclude(cat => cat.ParentCategory)
-            .Include(c => c.VideoSections.OrderBy(s => s.SortNumber))
-            .ThenInclude(s => s.Videos.OrderBy(cv => cv.SortNumber))
+            .AsNoTracking()
             .AsQueryable();
 
         if (User.Identity is { IsAuthenticated: true })
