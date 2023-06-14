@@ -76,7 +76,10 @@ public class WordsController : ControllerBase
             return NotFound();
         }
 
-        return await q.ToListAsync();
+        return await q.Select(w => new Word
+        {
+            Name = w.Name, Slug = w.Slug, Description = w.Description
+        }).ToListAsync();
     }
 
 
