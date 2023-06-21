@@ -78,7 +78,12 @@ public class WordsController : ControllerBase
 
         return await q.Select(w => new Word
         {
-            Name = w.Name, Slug = w.Slug, Description = w.Description
+            Id = w.Id,
+            Name = w.Name,
+            Slug = w.Slug,
+            Description = w.Description,
+            MainThumb = w.MainThumb,
+            MainImage = w.MainImage
         }).ToListAsync();
     }
 
